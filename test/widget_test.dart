@@ -12,6 +12,6 @@ import 'package:video_player/main.dart';
 void main() {
   testWidgets('Smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const VideoPlayerApp());
+    await tester.pumpWidget(VideoPlayerApp());
   });
 }
