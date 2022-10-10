@@ -5,9 +5,11 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:video_player_app/features/uploads/presentation/cubit/get_channel_videos_cubit.dart';
 import 'package:video_player_app/features/uploads/presentation/cubit/get_channel_videos_state.dart';
+import 'package:video_player_app/features/uploads/presentation/widget/search_box.dart';
 import 'package:video_player_app/routes/router.gr.dart';
 import 'package:video_player_app/shared/constants/texts.dart';
 import 'package:video_player_app/shared/extensions/string_extension.dart';
+import 'package:video_player_app/shared/extensions/text_editing_controller_extension.dart';
 import 'package:video_player_app/shared/widgets/base_widget.dart';
 import 'package:video_player_app/shared/widgets/video_preview_container.dart';
 import 'package:video_player_app/shared/widgets/spacing.dart';
@@ -18,34 +20,42 @@ class UploadsScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cubit = ref.watch(getChannelVideosCubitProvider);
+    final focusNode = useFocusNode();
+    final controller = useTextEditingController();
+    final overlayState = useState<OverlayState>(Overlay.of(context));
+    final overlayEntry = useState<OverlayEntry?>(null);
+
+    controller.addHookListener(() {});
 
     useEffect(() {
-      cubit.call();
-      return;
+      // cubit.call();
+      return null;
     }, []);
 
     return BaseWidget(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                AppTexts.uploads,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Row(
-                children: const [
-                  Icon(Icons.search_rounded),
-                  XMargin(10),
-                  Text('Search'),
-                ],
-              ),
-            ],
+          Text(
+            AppTexts.uploads,
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const YMargin(16),
+          SearchBox(
+            controller: controller,
+            focusNode: focusNode,
+            overlayEntry: overlayEntry,
+            overlayState: overlayState,
+            onSearch: () {
+              focusNode.unfocus();
+              // cubit.call(query: controller.text);
+              if (controller.text.isNotEmpty) {
+                cubit.addToSearchHistory(controller.text);
+              }
+            },
           ),
           const YMargin(32),
           BlocBuilder<GetChannelVideosCubit, GetChannelVideosState>(
@@ -53,6 +63,12 @@ class UploadsScreen extends HookConsumerWidget {
             builder: (context, state) {
               return state.maybeWhen(
                 orElse: () => const SizedBox.shrink(),
+                loading: () => const Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.amber,
+                    valueColor: AlwaysStoppedAnimation(Colors.black),
+                  ),
+                ),
                 error: (message) => Text(
                   message,
                   style: const TextStyle(color: Colors.redAccent),
