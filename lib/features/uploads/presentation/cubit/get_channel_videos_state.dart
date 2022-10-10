@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:video_player_app/features/uploads/model/search_snippet_data.dart';
+import 'package:video_player_app/features/uploads/model/snippet_data.dart';
 
 part 'get_channel_videos_state.freezed.dart';
 
@@ -11,6 +11,6 @@ class GetChannelVideosState with _$GetChannelVideosState {
 
   const factory GetChannelVideosState.error({required String message}) = _Error;
 
-  const factory GetChannelVideosState.finished(
-      {required SearchSnippetData data}) = _Finished;
+  const factory GetChannelVideosState.finished({required SnippetData data}) =
+      _Finished;
 }
