@@ -1,6 +1,8 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:video_player_app/core/services/api/api_service_impl.dart';
+import 'package:video_player_app/core/services/storage/offline_client.dart';
+import 'package:video_player_app/core/services/storage/offline_client_impl.dart';
 import 'package:video_player_app/features/playlist/repository/playlist_repository.dart';
 import 'package:video_player_app/features/playlist/repository/playlist_repository_impl.dart';
 import 'package:video_player_app/features/uploads/repository/uploads_repository.dart';
@@ -19,3 +21,6 @@ final playlistRepositoryProvider = Provider<PlaylistRepository>(
 );
 
 final connectivityProvider = Provider<Connectivity>((ref) => Connectivity());
+
+final offlineClientProvider =
+    Provider<OfflineClient>((ref) => OfflineClientImpl());

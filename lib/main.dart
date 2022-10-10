@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:loggy/loggy.dart';
+import 'package:video_player_app/core/config/injection.dart';
 import 'package:video_player_app/routes/router.gr.dart';
 
-void main() => runApp(ProviderScope(child: VideoPlayerApp()));
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await serviceLocator();
+  Loggy.initLoggy();
+
+  runApp(ProviderScope(child: VideoPlayerApp()));
+}
 
 class VideoPlayerApp extends StatelessWidget {
   VideoPlayerApp({Key? key}) : super(key: key);

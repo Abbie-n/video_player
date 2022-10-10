@@ -38,6 +38,12 @@ class PlaylistsScreen extends HookConsumerWidget {
             builder: (context, state) {
               return state.maybeWhen(
                 orElse: () => const SizedBox.shrink(),
+                loading: () => const Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.amber,
+                    valueColor: AlwaysStoppedAnimation(Colors.black),
+                  ),
+                ),
                 error: (message) => Text(
                   message,
                   style: const TextStyle(color: Colors.redAccent),

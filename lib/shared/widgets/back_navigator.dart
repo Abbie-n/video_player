@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player_app/shared/constants/colors.dart';
 
 class BackNavigator extends StatelessWidget {
   const BackNavigator({Key? key, this.route}) : super(key: key);
