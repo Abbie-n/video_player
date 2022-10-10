@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:video_player/routes/router.gr.dart';
-import 'package:video_player/shared/constants/colors.dart';
-import 'package:video_player/shared/constants/texts.dart';
+import 'package:video_player_app/routes/router.gr.dart';
+import 'package:video_player_app/shared/constants/colors.dart';
+import 'package:video_player_app/shared/constants/texts.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
       value: SystemUiOverlayStyle.dark,
       child: AutoTabsScaffold(
         routes: const [
-          VideosScreen(),
+          UploadsScreen(),
           PlaylistsScreen(),
         ],
         bottomNavigationBuilder: (context, tabsRouter) => BottomNavigationBar(
@@ -43,7 +43,7 @@ class HomeScreen extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 5),
                 child: Icon(Icons.video_collection),
               ),
-              label: AppTexts.videos,
+              label: AppTexts.uploads,
             ),
             BottomNavigationBarItem(
               icon: const Padding(

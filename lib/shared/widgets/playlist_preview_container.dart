@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import 'package:video_player/shared/constants/colors.dart';
-import 'package:video_player/shared/widgets/spacing.dart';
+import 'package:video_player_app/shared/constants/colors.dart';
+import 'package:video_player_app/shared/widgets/spacing.dart';
 
 class PlaylistPreviewContainer extends StatelessWidget {
   final String title;

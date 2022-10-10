@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:video_player/shared/constants/texts.dart';
-import 'package:video_player/shared/widgets/base_widget.dart';
-import 'package:video_player/shared/widgets/playlist_preview_container.dart';
-import 'package:video_player/shared/widgets/spacing.dart';
+import 'package:video_player_app/shared/constants/texts.dart';
+import 'package:video_player_app/shared/widgets/base_widget.dart';
+import 'package:video_player_app/shared/widgets/playlist_preview_container.dart';
+import 'package:video_player_app/shared/widgets/spacing.dart';
 
 class PlaylistsScreen extends StatelessWidget {
   const PlaylistsScreen({super.key});
