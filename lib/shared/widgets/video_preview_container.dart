@@ -1,21 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import 'package:video_player/shared/constants/colors.dart';
-import 'package:video_player/shared/widgets/spacing.dart';
+import 'package:video_player_app/shared/constants/colors.dart';
+import 'package:video_player_app/shared/widgets/spacing.dart';
 
 class VideoPreviewContainer extends StatelessWidget {
   final String title;
-  final String views;
   final String date;
   final String image;
+  final String channelTitle;
 
   const VideoPreviewContainer({
     Key? key,
     required this.title,
-    required this.views,
     required this.date,
     required this.image,
+    required this.channelTitle,
   }) : super(key: key);
 
   @override
@@ -57,7 +57,9 @@ class VideoPreviewContainer extends StatelessWidget {
               const YMargin(10),
               Text(title),
               const YMargin(5),
-              Text('$views views • $date'),
+              Text('Published $date'),
+              const YMargin(15),
+              Text('By $channelTitle'),
             ],
           );
         },
