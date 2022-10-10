@@ -1,61 +1,54 @@
-import 'package:loggy/loggy.dart';
 import 'package:video_player_app/core/model/api_request.dart';
 import 'package:video_player_app/core/services/api/api_service.dart';
 import 'package:video_player_app/core/utils/constants.dart';
+import 'package:video_player_app/features/playlist/model/playlist_snippet_data.dart';
+import 'package:video_player_app/features/playlist/repository/playlist_repository.dart';
 import 'package:video_player_app/features/uploads/model/snippet_data.dart';
-import 'package:video_player_app/features/uploads/repository/uploads_repository.dart';
 
-const path = 'search';
-
-class UploadsRepositoryImpl implements UploadsRepository {
+class PlaylistRepositoryImpl implements PlaylistRepository {
   final ApiService apiService;
 
-  UploadsRepositoryImpl({required this.apiService});
+  PlaylistRepositoryImpl({required this.apiService});
 
   @override
-  Future<SnippetData> getChannelVideos() async {
+  Future<PlaylistSnippetData> getChannelPlaylists() async {
+    const path = 'playlists';
     final req = baseRequest.copyWith(
       channelId: Constants.channelId,
-      order: 'date',
-      type: 'video',
-      channelType: 'channelTypeUnspecified',
     );
 
     req.toJson().removeWhere((key, value) => value == null);
     final params = req.toJson();
-    logDebug('get params ::: $params');
 
     final response = await apiService.get(path, params: params);
 
     if (response == null || response.runtimeType == int) {
-      return const SnippetData();
+      return const PlaylistSnippetData();
     }
 
-    final data = SnippetData.fromJson(response);
+    final data = PlaylistSnippetData.fromJson(response);
     return data;
   }
 
   @override
-  Future<SnippetData> searchChannelVideos(String query) async {
+  Future<PlaylistSnippetData> getPlaylistVideos(String playlistId) async {
+    const path = 'playlistItems';
+
     final req = baseRequest.copyWith(
-      q: query,
       channelId: Constants.channelId,
-      order: 'date',
-      type: 'video',
-      channelType: 'channelTypeUnspecified',
+      playlistId: playlistId,
     );
 
     req.toJson().removeWhere((key, value) => value == null);
     final params = req.toJson();
-    logDebug('search params ::: $params');
 
     final response = await apiService.get(path, params: params);
 
     if (response == null || response.runtimeType == int) {
-      return const SnippetData();
+      return const PlaylistSnippetData();
     }
 
-    final data = SnippetData.fromJson(response);
+    final data = PlaylistSnippetData.fromJson(response);
     return data;
   }
 }

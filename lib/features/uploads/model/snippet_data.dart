@@ -1,22 +1,22 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'search_snippet_data.freezed.dart';
+part 'snippet_data.freezed.dart';
 
-part 'search_snippet_data.g.dart';
+part 'snippet_data.g.dart';
 
 @freezed
-class SearchSnippetData with _$SearchSnippetData {
-  const factory SearchSnippetData({
+class SnippetData with _$SnippetData {
+  const factory SnippetData({
     final String? kind,
     final String? etag,
     final String? nextPageToken,
     final String? regionCode,
     final PageInfo? pageInfo,
     final List<Items>? items,
-  }) = _SearchSnippetData;
+  }) = _SnippetData;
 
-  factory SearchSnippetData.fromJson(Map<String, dynamic> json) =>
-      _$SearchSnippetDataFromJson(json);
+  factory SnippetData.fromJson(Map<String, dynamic> json) =>
+      _$SnippetDataFromJson(json);
 }
 
 @freezed

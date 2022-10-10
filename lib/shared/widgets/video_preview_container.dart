@@ -7,19 +7,22 @@ import 'package:video_player_app/shared/widgets/spacing.dart';
 class VideoPreviewContainer extends StatelessWidget {
   final String title;
   final String date;
-  final String image;
+  final String? image;
   final String channelTitle;
 
   const VideoPreviewContainer({
     Key? key,
     required this.title,
     required this.date,
-    required this.image,
+    this.image,
     required this.channelTitle,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if (image == null) {
+      return const SizedBox.shrink();
+    }
     return Container(
       margin: const EdgeInsets.only(bottom: 15),
       child: CachedNetworkImage(
@@ -30,7 +33,7 @@ class VideoPreviewContainer extends StatelessWidget {
           ),
         ),
         errorWidget: (context, url, _) => const SizedBox.shrink(),
-        imageUrl: image,
+        imageUrl: image!,
         imageBuilder: (context, imageProvider) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,

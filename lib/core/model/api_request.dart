@@ -26,6 +26,6 @@ class ApiRequest with _$ApiRequest {
 
 const baseRequest = ApiRequest(
   part: 'snippet',
-  maxResults: 10,
+  maxResults: 30,
   key: Constants.key,
 );
