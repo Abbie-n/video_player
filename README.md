@@ -1,16 +1,18 @@
-# video_player
-
-A new Flutter project.
+# A Youtube video player
+Built with Flutter 💙
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Get rid of initial errors by running the following in your terminal:
 
-A few resources to get you started if this is your first Flutter project:
+Install dependencies:
+`flutter pub get`
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Code generation:
+`flutter pub pub run build_runner build --delete-conflicting-outputs`
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Folder structure (pending)
+
+## Code cleanup (pending)
+
+## Modify logic for Search persistence (pending)
