@@ -91,6 +91,8 @@ class SearchBox extends HookConsumerWidget {
 
         overlayState!.value.insert(overlayEntry.value!);
       }
+
+      searchHistory.value = cubit.getSearchHistory();
     }
 
     controller.addHookListener(listener);
