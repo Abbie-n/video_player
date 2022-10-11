@@ -28,7 +28,7 @@ class UploadsScreen extends HookConsumerWidget {
     controller.addHookListener(() {});
 
     useEffect(() {
-      // cubit.call();
+      cubit.call();
       return null;
     }, []);
 
@@ -51,7 +51,7 @@ class UploadsScreen extends HookConsumerWidget {
             overlayState: overlayState,
             onSearch: () {
               focusNode.unfocus();
-              // cubit.call(query: controller.text);
+              cubit.call(query: controller.text);
               if (controller.text.isNotEmpty) {
                 cubit.addToSearchHistory(controller.text);
               }
