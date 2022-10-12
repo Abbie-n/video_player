@@ -16,3 +16,5 @@ Code generation:
 ## Code cleanup (pending)
 
 ## Unit tests (pending)
+
+PS: if you ever get the response `No data found`, chances are you've reached the limit on queries for the day.
