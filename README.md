@@ -14,5 +14,3 @@ Code generation:
 ## Folder structure (pending)
 
 ## Code cleanup (pending)
-
-## Modify logic for Search persistence (pending)
