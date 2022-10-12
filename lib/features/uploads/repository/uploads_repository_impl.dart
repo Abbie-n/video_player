@@ -1,4 +1,3 @@
-import 'package:loggy/loggy.dart';
 import 'package:video_player_app/core/model/api_request.dart';
 import 'package:video_player_app/core/services/api/api_service.dart';
 import 'package:video_player_app/core/utils/constants.dart';
@@ -23,7 +22,6 @@ class UploadsRepositoryImpl implements UploadsRepository {
 
     req.toJson().removeWhere((key, value) => value == null);
     final params = req.toJson();
-    logDebug('get params ::: $params');
 
     final response = await apiService.get(path, params: params);
 
@@ -47,7 +45,6 @@ class UploadsRepositoryImpl implements UploadsRepository {
 
     req.toJson().removeWhere((key, value) => value == null);
     final params = req.toJson();
-    logDebug('search params ::: $params');
 
     final response = await apiService.get(path, params: params);
 

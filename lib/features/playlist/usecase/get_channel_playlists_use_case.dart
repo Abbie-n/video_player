@@ -1,9 +1,9 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:video_player_app/core/model/data.dart';
 import 'package:video_player_app/core/services/api/api_exception.dart';
 import 'package:video_player_app/shared/extensions/connectivity_extension.dart';
 import 'package:video_player_app/features/playlist/model/playlist_snippet_data.dart';
 import 'package:video_player_app/features/playlist/repository/playlist_repository.dart';
-import 'package:video_player_app/shared/data.dart';
 
 class GetChannelPlaylistsUseCase {
   final Connectivity _connectivity;

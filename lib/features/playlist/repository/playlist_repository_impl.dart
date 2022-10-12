@@ -3,7 +3,6 @@ import 'package:video_player_app/core/services/api/api_service.dart';
 import 'package:video_player_app/core/utils/constants.dart';
 import 'package:video_player_app/features/playlist/model/playlist_snippet_data.dart';
 import 'package:video_player_app/features/playlist/repository/playlist_repository.dart';
-import 'package:video_player_app/features/uploads/model/snippet_data.dart';
 
 class PlaylistRepositoryImpl implements PlaylistRepository {
   final ApiService apiService;

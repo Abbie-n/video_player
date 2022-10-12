@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player_app/bloc_provider.dart';
-import 'package:video_player_app/features/playlist/presentation/cubit/get_channel_playlists_state.dart';
 import 'package:video_player_app/features/playlist/presentation/cubit/get_playlist_videos_state.dart';
 import 'package:video_player_app/features/playlist/usecase/get_playlist_videos_use_case.dart';
 import 'package:video_player_app/providers.dart';

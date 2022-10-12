@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:video_player_app/shared/widgets/back_navigator.dart';
 import 'package:video_player_app/shared/widgets/base_widget.dart';
+import 'package:video_player_app/shared/widgets/header.dart';
 import 'package:video_player_app/shared/widgets/spacing.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
@@ -41,16 +41,7 @@ class CustomVideoPlayer extends HookConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: const [
-                  BackNavigator(),
-                  XMargin(16),
-                  Text(
-                    'Player',
-                    style: TextStyle(fontSize: 24),
-                  ),
-                ],
-              ),
+              const Header(title: 'Player'),
               const YMargin(16),
               Expanded(child: player)
             ],

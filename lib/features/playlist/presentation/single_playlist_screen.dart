@@ -6,9 +6,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:video_player_app/features/playlist/presentation/cubit/get_playlist_videos_cubit.dart';
 import 'package:video_player_app/features/playlist/presentation/cubit/get_playlist_videos_state.dart';
 import 'package:video_player_app/routes/router.gr.dart';
+import 'package:video_player_app/shared/constants/texts.dart';
 import 'package:video_player_app/shared/extensions/string_extension.dart';
-import 'package:video_player_app/shared/widgets/back_navigator.dart';
 import 'package:video_player_app/shared/widgets/base_widget.dart';
+import 'package:video_player_app/shared/widgets/header.dart';
 import 'package:video_player_app/shared/widgets/video_preview_container.dart';
 import 'package:video_player_app/shared/widgets/spacing.dart';
 
@@ -35,78 +36,60 @@ class SinglePlaylistScreen extends HookConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              const BackNavigator(),
-              const XMargin(16),
-              Expanded(
-                child: Text(
-                  '$playlistTitle playlist',
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
+          Header(title: '$playlistTitle playlist'),
           const YMargin(32),
           BlocBuilder<GetPlaylistsVideosCubit, GetPlaylistVideosState>(
             bloc: cubit,
-            builder: (context, state) {
-              return state.maybeWhen(
-                orElse: () => const SizedBox.shrink(),
-                loading: () => const Center(
-                  child: CircularProgressIndicator(
-                    backgroundColor: Colors.amber,
-                    valueColor: AlwaysStoppedAnimation(Colors.black),
+            builder: (context, state) => state.maybeWhen(
+              orElse: () => const SizedBox.shrink(),
+              loading: () => const Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.amber,
+                  valueColor: AlwaysStoppedAnimation(Colors.black),
+                ),
+              ),
+              error: (message) => Center(
+                child: Text(
+                  message,
+                  style: const TextStyle(
+                    color: Colors.redAccent,
                   ),
                 ),
-                error: (message) => Text(
-                  message,
-                  style: const TextStyle(color: Colors.redAccent),
-                ),
-                finished: (data) {
-                  return Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Column(
-                            children: List.generate(
-                              data.items!.length,
-                              (index) => GestureDetector(
-                                onTap: () {
-                                  if (data.items![index].snippet!.resourceId !=
-                                      null) {
-                                    context.router.push(CustomVideoPlayer(
-                                        videoId: data.items![index].snippet!
-                                            .resourceId!.videoId!));
-                                    return;
-                                  }
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text('Video unavailable'),
-                                    ),
-                                  );
-                                },
-                                child: VideoPreviewContainer(
-                                    channelTitle: data
-                                        .items![index].snippet!.channelTitle!,
-                                    date: data.items![index].snippet!
-                                        .publishedAt!.convertToTimeAgo,
-                                    title: data.items![index].snippet!.title!,
-                                    image: data.items![index].snippet!
-                                        .thumbnails!.medium?.url),
-                              ),
+              ),
+              finished: (data) => Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: data.items!
+                        .map(
+                          (item) => GestureDetector(
+                            onTap: () {
+                              if (item.snippet!.resourceId != null) {
+                                context.router.push(
+                                  CustomVideoPlayer(
+                                    videoId: item.snippet!.resourceId!.videoId!,
+                                  ),
+                                );
+                                return;
+                              }
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(AppTexts.videoUnavailable),
+                                ),
+                              );
+                            },
+                            child: VideoPreviewContainer(
+                              channelTitle: item.snippet!.channelTitle!,
+                              date: item.snippet!.publishedAt!.convertToTimeAgo,
+                              title: item.snippet!.title!,
+                              image: item.snippet!.thumbnails!.medium?.url,
                             ),
-                          )
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              );
-            },
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+              ),
+            ),
           ),
         ],
       ),
