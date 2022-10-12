@@ -35,40 +35,38 @@ class PlaylistsScreen extends HookConsumerWidget {
           const YMargin(32),
           BlocBuilder<GetChannelPlaylistsCubit, GetChannelPlaylistsState>(
             bloc: cubit,
-            builder: (context, state) {
-              return state.maybeWhen(
-                orElse: () => const SizedBox.shrink(),
-                loading: () => const Center(
-                  child: CircularProgressIndicator(
-                    backgroundColor: Colors.amber,
-                    valueColor: AlwaysStoppedAnimation(Colors.black),
+            builder: (context, state) => state.maybeWhen(
+              orElse: () => const SizedBox.shrink(),
+              loading: () => const Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.amber,
+                  valueColor: AlwaysStoppedAnimation(Colors.black),
+                ),
+              ),
+              error: (message) => Center(
+                child: Text(
+                  message,
+                  style: const TextStyle(
+                    color: Colors.redAccent,
                   ),
                 ),
-                error: (message) => Text(
-                  message,
-                  style: const TextStyle(color: Colors.redAccent),
-                ),
-                finished: (data) => Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Column(
-                          children: List.generate(
-                            data.items!.length,
-                            (index) => PlaylistPreviewContainer(
-                              title: data.items![index].snippet!.title!,
-                              image: data.items![index].snippet!.thumbnails!
-                                  .medium!.url!,
-                              playlistId: data.items![index].id!,
-                            ),
+              ),
+              finished: (data) => Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: data.items!
+                        .map(
+                          (item) => PlaylistPreviewContainer(
+                            title: item.snippet!.title!,
+                            image: item.snippet!.thumbnails!.medium!.url!,
+                            playlistId: item.id!,
                           ),
                         )
-                      ],
-                    ),
+                        .toList(),
                   ),
                 ),
-              );
-            },
+              ),
+            ),
           ),
         ],
       ),

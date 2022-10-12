@@ -34,38 +34,36 @@ class VideoPreviewContainer extends StatelessWidget {
         ),
         errorWidget: (context, url, _) => const SizedBox.shrink(),
         imageUrl: image!,
-        imageBuilder: (context, imageProvider) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 210,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  image: DecorationImage(
-                    image: imageProvider,
-                    fit: BoxFit.cover,
-                    colorFilter: ColorFilter.mode(
-                      AppColors.grey.withOpacity(.5),
-                      BlendMode.darken,
-                    ),
+        imageBuilder: (context, imageProvider) => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 210,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                image: DecorationImage(
+                  image: imageProvider,
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                    AppColors.grey.withOpacity(.5),
+                    BlendMode.darken,
                   ),
                 ),
-                child: const Icon(
-                  Icons.play_circle,
-                  size: 100,
-                ),
               ),
-              const YMargin(10),
-              Text(title),
-              const YMargin(5),
-              Text('Published $date'),
-              const YMargin(15),
-              Text('By $channelTitle'),
-            ],
-          );
-        },
+              child: const Icon(
+                Icons.play_circle,
+                size: 100,
+              ),
+            ),
+            const YMargin(10),
+            Text(title),
+            const YMargin(5),
+            Text('Published $date'),
+            const YMargin(15),
+            Text('By $channelTitle'),
+          ],
+        ),
       ),
     );
   }

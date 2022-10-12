@@ -49,68 +49,60 @@ class UploadsScreen extends HookConsumerWidget {
             focusNode: focusNode,
             overlayEntry: overlayEntry,
             overlayState: overlayState,
-            onSearch: () {
-              focusNode.unfocus();
-              cubit.call(query: controller.text);
-              if (controller.text.isNotEmpty) {
-                cubit.addToSearchHistory(controller.text);
-              }
-            },
           ),
           const YMargin(32),
           BlocBuilder<GetChannelVideosCubit, GetChannelVideosState>(
             bloc: cubit,
-            builder: (context, state) {
-              return state.maybeWhen(
-                orElse: () => const SizedBox.shrink(),
-                loading: () => const Center(
-                  child: CircularProgressIndicator(
-                    backgroundColor: Colors.amber,
-                    valueColor: AlwaysStoppedAnimation(Colors.black),
+            builder: (context, state) => state.maybeWhen(
+              orElse: () => const SizedBox.shrink(),
+              loading: () => const Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.amber,
+                  valueColor: AlwaysStoppedAnimation(Colors.black),
+                ),
+              ),
+              error: (message) => Center(
+                child: Text(
+                  message,
+                  style: const TextStyle(
+                    color: Colors.redAccent,
                   ),
                 ),
-                error: (message) => Text(
-                  message,
-                  style: const TextStyle(color: Colors.redAccent),
-                ),
-                finished: (data) => Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Column(
-                          children: List.generate(
-                            data.items!.length,
-                            (index) => GestureDetector(
-                              onTap: () {
-                                if (data.items![index].id!.videoId != null) {
-                                  context.router.push(CustomVideoPlayer(
-                                      videoId:
-                                          data.items![index].id!.videoId!));
-                                  return;
-                                }
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Video unavailable'),
+              ),
+              finished: (data) => Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: data.items!
+                        .map(
+                          (item) => GestureDetector(
+                            onTap: () {
+                              if (item.id!.videoId != null) {
+                                context.router.push(
+                                  CustomVideoPlayer(
+                                    videoId: item.id!.videoId!,
                                   ),
                                 );
-                              },
-                              child: VideoPreviewContainer(
-                                  channelTitle:
-                                      data.items![index].snippet!.channelTitle!,
-                                  date: data.items![index].snippet!.publishedAt!
-                                      .convertToTimeAgo,
-                                  title: data.items![index].snippet!.title!,
-                                  image: data.items![index].snippet!.thumbnails!
-                                      .medium!.url!),
+                                return;
+                              }
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(AppTexts.videoUnavailable),
+                                ),
+                              );
+                            },
+                            child: VideoPreviewContainer(
+                              channelTitle: item.snippet!.channelTitle!,
+                              date: item.snippet!.publishedAt!.convertToTimeAgo,
+                              title: item.snippet!.title!,
+                              image: item.snippet!.thumbnails!.medium!.url!,
                             ),
                           ),
                         )
-                      ],
-                    ),
+                        .toList(),
                   ),
                 ),
-              );
-            },
+              ),
+            ),
           ),
         ],
       ),

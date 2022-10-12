@@ -1,12 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player_app/bloc_provider.dart';
+import 'package:video_player_app/core/model/data.dart';
 import 'package:video_player_app/features/uploads/model/search_history_data.dart';
 import 'package:video_player_app/features/uploads/model/snippet_data.dart';
 import 'package:video_player_app/features/uploads/presentation/cubit/get_channel_videos_state.dart';
 import 'package:video_player_app/features/uploads/usecase/get_channel_videos_use_case.dart';
 import 'package:video_player_app/features/uploads/usecase/search_channel_videos_use_case.dart';
 import 'package:video_player_app/providers.dart';
-import 'package:video_player_app/shared/data.dart';
 
 final getChannelVideosCubitProvider = cubitAutoDispose<GetChannelVideosCubit>(
   (ref) => GetChannelVideosCubit(

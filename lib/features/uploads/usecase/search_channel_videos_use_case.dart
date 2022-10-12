@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:uuid/uuid.dart';
+import 'package:video_player_app/core/model/data.dart';
 import 'package:video_player_app/core/services/api/api_exception.dart';
 import 'package:video_player_app/core/services/storage/offline_client.dart';
 import 'package:video_player_app/core/utils/constants.dart';
@@ -9,7 +10,6 @@ import 'package:video_player_app/features/uploads/model/search_history_data.dart
 import 'package:video_player_app/shared/extensions/connectivity_extension.dart';
 import 'package:video_player_app/features/uploads/model/snippet_data.dart';
 import 'package:video_player_app/features/uploads/repository/uploads_repository.dart';
-import 'package:video_player_app/shared/data.dart';
 
 class SearchChannelVideosUseCase {
   final Connectivity _connectivity;
@@ -44,7 +44,7 @@ class SearchChannelVideosUseCase {
   void addToSearchHistory(String text) async {
     List<SearchHistoryData> searchlist = [];
     final localString =
-        offlineClient.getString(Constants.searchHistoryStorageKey);
+        await offlineClient.getString(Constants.searchHistoryStorageKey);
 
     if (localString != null) {
       for (final x in jsonDecode(localString)) {
@@ -66,7 +66,7 @@ class SearchChannelVideosUseCase {
   void deleteSingleSearchHistory(String id) async {
     List<SearchHistoryData> searchlist = [];
     final localString =
-        offlineClient.getString(Constants.searchHistoryStorageKey);
+        await offlineClient.getString(Constants.searchHistoryStorageKey);
 
     if (localString != null) {
       for (final x in jsonDecode(localString)) {
@@ -84,17 +84,19 @@ class SearchChannelVideosUseCase {
 
   List<SearchHistoryData> getSearchHistory() {
     List<SearchHistoryData> searchlist = [];
-    final localString =
-        offlineClient.getString(Constants.searchHistoryStorageKey);
-
-    if (localString != null) {
-      for (final x in jsonDecode(localString)) {
-        searchlist.add(SearchHistoryData.fromJson(x));
+    Future.delayed(Duration.zero, () async {
+      final localString =
+          (await offlineClient.getString(Constants.searchHistoryStorageKey));
+      if (localString != null) {
+        for (final x in jsonDecode(localString)) {
+          searchlist.add(SearchHistoryData.fromJson(x));
+        }
       }
-    }
+    });
+
     return searchlist;
   }
 
   void clearSearchHistory() async =>
-      offlineClient.clearData(Constants.searchHistoryStorageKey);
+      await offlineClient.clearData(Constants.searchHistoryStorageKey);
 }
